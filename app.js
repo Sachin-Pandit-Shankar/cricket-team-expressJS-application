@@ -32,7 +32,7 @@ const convertDbObject = (objectItem) => {
 };
 
 app.get("/players/", async (request, response) => {
-  const getPlayersQuery = `select * from cricket_team`;
+  const getPlayersQuery = `SELECT * FROM cricket_team`;
   const getPlayersQueryResponse = await database.all(getPlayersQuery);
   response.send(
     getPlayersQueryResponse.map((eachPlayer) => convertDbObject(eachPlayer))
@@ -44,9 +44,9 @@ app.get("/players/", async (request, response) => {
 
 app.post("/players/", async (request, response) => {
   const { playerName, jerseyNumber, role } = request.body;
-  const createPlayerQuery = ` insert into cricket_team(player_name,
+  const createPlayerQuery = ` INSERT INTO cricket_team(player_name,
     jersey_number,role) 
-    values('${playerName}',${jerseyNumber},'${role}');`;
+    VALUES('${playerName}',${jerseyNumber},'${role}');`;
   const createPlayerQueryResponse = await database.run(createPlayerQuery);
   response.send(`Player Added to Team`);
 });
@@ -56,7 +56,7 @@ app.post("/players/", async (request, response) => {
 
 app.get("/players/:playerId/", async (request, response) => {
   const { playerId } = request.params;
-  const getPlayerDetailsQuery = `select * from cricket_team where 
+  const getPlayerDetailsQuery = `SELECT * FROM cricket_team WHERE 
   player_id = ${playerId};`;
   const getPlayerDetailsQueryResponse = await database.get(
     getPlayerDetailsQuery
@@ -70,9 +70,9 @@ app.get("/players/:playerId/", async (request, response) => {
 app.put("/players/:playerId/", async (request, response) => {
   const { playerId } = request.params;
   const { playerName, jerseyNumber, role } = request.body;
-  const updatePlayerDetailsQuery = `update cricket_team set 
+  const updatePlayerDetailsQuery = `UPDATE cricket_team SET 
   player_name = '${playerName}' , jersey_number = ${jerseyNumber} , role = '${role}' 
-  where player_id = ${playerId};`;
+  WHEREe player_id = ${playerId};`;
   await database.run(updatePlayerDetailsQuery);
   response.send("Player Details Updated");
 });
